@@ -2,17 +2,22 @@
 //  ImageLoader.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 7/3/25.
+//  Created by Amelia Shekikhacheva on 7/3/25.
 //
 
 import Foundation
 import UIKit
 
 final class ImageLoader {
+	private let cache = NSCache<NSString, UIImage>()
 	static let shared = ImageLoader()
 	
-	func load(from urlString: String, into imageView: UIImageView, placeholder: UIImage? = nil) {
-		imageView.image = placeholder
+	func load(from urlString: String, into imageView: UIImageView) {
+		let key = urlString as NSString
+		if let cachedImage = cache.object(forKey: key) {
+			imageView.image = cachedImage
+			return
+		}
 		guard let url = URL(string: urlString) else { return }
 		
 		let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -30,6 +35,7 @@ final class ImageLoader {
 				print("ImageLoader decoding error for \(urlString)")
 				return
 			}
+			self.cache.setObject(image, forKey: key)
 			DispatchQueue.main.async {
 				imageView.image = image
 			}

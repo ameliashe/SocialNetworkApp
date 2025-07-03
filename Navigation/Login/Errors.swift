@@ -2,7 +2,7 @@
 //  Errors.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 1/28/25.
+//  Created by Amelia Shekikhacheva on 1/28/25.
 //
 
 import Foundation

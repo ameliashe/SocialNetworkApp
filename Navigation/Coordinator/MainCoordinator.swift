@@ -19,7 +19,7 @@ class MainCoordinator: Coordinator {
 	var tabBarController = UITabBarController()
 
 	var feedCoordinator: FeedCoordinator?
-	var profileCoordinator: ProfileCoordinator?
+	var profileCoordinator: LoginCoordinator?
 	var favoritesCoordinator: FavoritesCoordinator?
 
 	init(navigationController: UINavigationController, tabBarController: UITabBarController) {
@@ -34,7 +34,7 @@ class MainCoordinator: Coordinator {
 		let favNC = UINavigationController()
 
 		feedCoordinator = FeedCoordinator(navigationController:	feedNC)
-		profileCoordinator = ProfileCoordinator(navigationController: profileNC)
+		profileCoordinator = LoginCoordinator(navigationController: profileNC)
 		favoritesCoordinator = FavoritesCoordinator(navigationController: favNC)
 
 		feedCoordinator?.start()
@@ -52,6 +52,7 @@ class MainCoordinator: Coordinator {
 		tabBarController.tabBar.isTranslucent = false
 
 		navigationController.viewControllers = [tabBarController]
+		navigationController.setNavigationBarHidden(true, animated: false)
 	}
 
 }

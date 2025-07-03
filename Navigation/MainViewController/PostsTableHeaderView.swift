@@ -2,7 +2,7 @@
 //  PostsTableHeaderView.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 6/27/25.
+//  Created by Amelia Shekikhacheva on 6/27/25.
 //
 
 import UIKit

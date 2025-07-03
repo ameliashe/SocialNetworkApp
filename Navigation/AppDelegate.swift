@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseCore
 import FirebaseAuth
+import FirebaseFirestore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		FirebaseApp.configure()
-		LocalNotificationsService.shared.registerForLatestUpdatesIfPossible()
+		
+		let db = Firestore.firestore()
+		var settings = db.settings
+		let cacheSettings = PersistentCacheSettings(sizeBytes: (20 * 1024 * 1024) as NSNumber)
+		settings.cacheSettings = cacheSettings
+		db.settings = settings
+		
 		return true
 	}
 

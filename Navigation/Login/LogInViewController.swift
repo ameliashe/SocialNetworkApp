@@ -321,11 +321,13 @@ class LogInViewController: UIViewController {
 	func navigateToProfile() {
 		let profileVC = MainViewController()
 		// Retrieve userID from Keychain if available
-		let savedUserID = keychain.get("userID") ?? userID
-		profileVC.user = userList.first { $0.login == savedUserID }
-		let arrayOfPosts = posts.filter { $0.authorID == savedUserID }
-		profileVC.postsList = arrayOfPosts
-		navigationController?.pushViewController(profileVC, animated: true)
+		UsersStoreManager().fetchUser(byLogin: CurrentUserService().currentUser ?? "") { [weak self] user in
+			guard let self = self else { return }
+			DispatchQueue.main.async {
+				profileVC.user = user
+				self.navigationController?.pushViewController(profileVC, animated: true)
+			}
+		}
 	}
 
 	func handleAuthError(_ error: AuthError) {

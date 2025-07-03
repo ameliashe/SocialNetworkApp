@@ -2,7 +2,7 @@
 //  MainViewController.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 10/31/24.
+//  Created by Amelia Shekikhacheva on 10/31/24.
 //
 
 import UIKit
@@ -30,11 +30,17 @@ class MainViewController: UIViewController {
 	var isShowingFeed: Bool = false
 	var isActiveProfile: Bool = false
 	var user: User?
-	public var postsList: [Post]?
 	private var displayedPosts = [Post]()
-	private let viewModel = PostsViewModel()
+	private let viewModel = FavoritesViewModel()
+	private let refreshControl: UIRefreshControl = {
+		let refreshControl = UIRefreshControl()
+		refreshControl.addTarget(self, action: #selector(refresh),
+			for: .valueChanged
+		)
+		return refreshControl
+	}()
 
-	private enum HeaderFooterReuseID: String {
+		private enum HeaderFooterReuseID: String {
 		case base = "ProfileHeaderView_ID"
 		case posts = "PostsHeaderView_ID"
 	}
@@ -84,7 +90,7 @@ class MainViewController: UIViewController {
 		setupCloseButton()
 		setupGesture()
 		setupNavigationBar()
-		configureFavoritesTable()
+		configureTableData()
 
 		fetchResultsController.delegate = self
 		try? fetchResultsController.performFetch()
@@ -93,7 +99,7 @@ class MainViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		configureFavoritesTable()
+		configureTableData()
 	}
 
 	//MARK: Layout
@@ -181,7 +187,7 @@ class MainViewController: UIViewController {
 			height: view.frame.width
 		)
 
-		UIView.animate(withDuration: 0.5, animations: {
+		UIView.animate(withDuration: 0.3, animations: {
 			self.overlayView.alpha = 1
 			avatarCopy.frame = targetFrame
 			avatarCopy.layer.cornerRadius = 0
@@ -203,23 +209,37 @@ class MainViewController: UIViewController {
 			cacheName: nil
 		)
 
-		configureFavoritesTable()
+		configureTableData()
 	}
 
-	func configureFavoritesTable() {
+	//MARK: Setting up the tableView
+	func configureTableData() {
+		
 		if isShowingFavoritePosts {
+			
+			//For displaying favorites
 			try? fetchResultsController.performFetch()
 			displayedPosts = fetchResultsController.fetchedObjects?.map { Post(entity: $0) } ?? []
+			self.displayedPostsTableView.reloadData()
 		} else if isShowingFeed {
-			guard let postsList = postsList else { return }
-			self.displayedPosts = postsList
+			
+			//For displaying Feed
+			PostsStoreManager().fetchAllPosts() { [weak self] posts in
+				guard let posts else { return }
+				self?.displayedPosts = posts
+				self?.displayedPostsTableView.reloadData()
+			}
 		} else {
-			guard let postsList = postsList else { return }
-			self.displayedPosts = postsList
+			//For displaying profile
+			let id = user?.login ?? ""
+			PostsStoreManager().fetchPosts(byAuthor: id) { [weak self] posts in
+				guard let posts else { return }
+				self?.displayedPosts = posts
+				self?.displayedPostsTableView.reloadData()
+			}
 		}
-		
-		displayedPostsTableView.reloadData()
 	}
+	
 
 
 	//MARK: User Interaction
@@ -257,6 +277,11 @@ class MainViewController: UIViewController {
 		let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapHandler))
 		doubleTapGesture.numberOfTapsRequired = 2
 		displayedPostsTableView.addGestureRecognizer(doubleTapGesture)
+	}
+	
+	@objc func refresh() {
+		displayedPostsTableView.reloadData()
+		refreshControl.endRefreshing()
 	}
 
 	@objc private func doubleTapHandler(_ gesture: UITapGestureRecognizer) {
@@ -304,7 +329,7 @@ class MainViewController: UIViewController {
 					sectionNameKeyPath: nil,
 					cacheName: nil
 				)
-				configureFavoritesTable()
+				configureTableData()
 			} else {
 				try? fetchResultsController.performFetch()
 			}
@@ -323,8 +348,7 @@ class MainViewController: UIViewController {
 			sectionNameKeyPath: nil,
 			cacheName: nil
 		)
-		configureFavoritesTable()
-
+		configureTableData()
 	}
 }
 
@@ -390,8 +414,6 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 			guard !displayedPosts.isEmpty else {
 				return UITableViewCell()
 			}
-
-			displayedPosts.sort { $0.postTime > $1.postTime }
 			cell.update(displayedPosts[indexPath.row])
 			cell.selectionStyle = .none
 			return cell
@@ -412,11 +434,28 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
 		//Push Photo Gallery
-		if indexPath.section == 0  && !isShowingFavoritePosts {
+		if indexPath.section == 0  && !isShowingFavoritePosts && !isShowingFeed {
 			let galleryVC = PhotoGalleryViewController()
 			navigationController?.pushViewController(galleryVC, animated: true)
 		} else {
+			if isShowingFeed {
+				let profileVC = MainViewController()
+				let postAuthorID = displayedPosts[indexPath.row].authorID
+				UsersStoreManager().fetchUser(byLogin: postAuthorID) { user in
+					guard let user = user else { return }
+					DispatchQueue.main.async {
+						profileVC.user = user
+						profileVC.navigationItem.largeTitleDisplayMode = .never
+						profileVC.navigationController?.isToolbarHidden = true
+						self.navigationController?.pushViewController(profileVC, animated: true)
+					}
+				}
+			}
 		}
+	}
+	
+	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return isShowingFavoritePosts || !isShowingFeed
 	}
 
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -427,7 +466,12 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 				try? viewModel.persistentContainer.viewContext.save()
 			}
-		} else {
+		} else if !isShowingFavoritePosts && !isShowingFeed {
+			if displayedPosts[indexPath.row].authorID == CurrentUserService().currentUser {
+//				PostsStoreManager().delete(postID: displayedPosts[indexPath.row].id)
+			} else {
+				return
+			}
 		}
 	}
 }
@@ -441,13 +485,13 @@ extension MainViewController: NSFetchedResultsControllerDelegate {
 			switch type {
 			case .insert:
 				displayedPostsTableView.insertRows(at: [newIndexPath!], with: .automatic)
-				configureFavoritesTable()
+				configureTableData()
 			case .delete:
 				displayedPostsTableView.deleteRows(at: [indexPath!], with: .automatic)
-				configureFavoritesTable()
+				configureTableData()
 			case .move:
 				displayedPostsTableView.moveRow(at: indexPath!, to: newIndexPath!)
-				configureFavoritesTable()
+				configureTableData()
 			case .update:
 				displayedPostsTableView.reloadData()
 				

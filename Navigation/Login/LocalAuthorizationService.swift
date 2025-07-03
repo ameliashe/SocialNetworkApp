@@ -2,7 +2,7 @@
 //  LocalAuthorizationService.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 4/21/25.
+//  Created by Amelia Shekikhacheva on 4/21/25.
 //
 
 import Foundation

@@ -21,8 +21,10 @@ class FeedCoordinator: Coordinator {
 
 		let feedVC = MainViewController()
 		feedVC.isShowingFeed = true
-		feedVC.postsList = posts
-
+		feedVC.title = NSLocalizedString("Feed", comment: "Feed Navigation Bar Title")
+		feedVC.navigationItem.largeTitleDisplayMode = .automatic
+		navigationController.navigationBar.prefersLargeTitles = true
+		
 		navigationController.pushViewController(feedVC, animated: false)
 	}
 

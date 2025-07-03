@@ -1,5 +1,5 @@
 //
-//  Coordinator.swift
+//  LoginCoordinator.swift
 //  Navigation
 //
 //  Created by Amelia Shekikhacheva on 1/10/25.
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class ProfileCoordinator: Coordinator {
+class LoginCoordinator: Coordinator {
 
 	var navigationController: UINavigationController
 

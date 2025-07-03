@@ -1,15 +1,15 @@
 //
-//  PostsViewModel.swift
+//  FavoritesViewModel.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 3/4/25.
+//  Created by Amelia Shekikhacheva on 3/4/25.
 //
 
 import Foundation
 import CoreData
 import UIKit
 
-final class PostsViewModel {
+final class FavoritesViewModel {
 
 	private(set) var posts: [Post] = []
 

@@ -19,6 +19,9 @@ class FavoritesCoordinator: Coordinator {
 
 	func start() {
 		let favoritesVC = MainViewController()
+		favoritesVC.isShowingFeed = true
+		favoritesVC.title = NSLocalizedString("Favorites", comment: "Favorites Navigation Bar Title")
+		favoritesVC.navigationItem.largeTitleDisplayMode = .automatic
 		favoritesVC.isShowingFavoritePosts = true
 
 		navigationController.pushViewController(favoritesVC, animated: false)

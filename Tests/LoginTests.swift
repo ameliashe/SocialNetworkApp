@@ -2,7 +2,7 @@
 //  LoginTests.swift
 //  NavigationTests
 //
-//  Created by Amelia Romanova on 4/19/25.
+//  Created by Amelia Shekikhacheva on 4/19/25.
 //
 
 import XCTest

@@ -2,7 +2,7 @@
 //  ProfileHeaderView.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 10/31/24.
+//  Created by Amelia Shekikhacheva on 10/31/24.
 //
 
 import UIKit
@@ -147,7 +147,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 	//MARK: View Configuration
 	func configure(with user: User, postsCount: Int?) {
 		ImageLoader.shared.load(from: user.avatar, into: avatarImageView)
-		avatarImageView.image = UIImage(named: "\(user.avatar)")
 		fullNameLabel.text = user.fullName
 		statusLabel.text = user.status
 		cityLabel.text = user.city

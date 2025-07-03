@@ -289,6 +289,7 @@
     },
     "Check the latest updates!" : {
       "comment" : "Notification title",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -592,6 +593,7 @@
     },
     "No new posts yet..." : {
       "comment" : "Action alert message",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -621,6 +623,7 @@
     },
     "Open this update to see what's new" : {
       "comment" : "Notification body",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1181,6 +1184,7 @@
     },
     "View latest post" : {
       "comment" : "Notification action",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1263,6 +1267,7 @@
     },
     "You've clicked the action!" : {
       "comment" : "Action alert title",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
