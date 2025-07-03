@@ -340,7 +340,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 			}
 			
 			if let user = user {
-				headerView.configure(with: user)
+				headerView.configure(with: user, postsCount: displayedPosts.count)
 			}
 			
 			headerView.avatarTapped = { [weak self] in
@@ -402,7 +402,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		if isShowingFeed { return 0 }
-		return isShowingFavoritePosts ? 0 : (section == 1 ? 20 : 300)
+		return isShowingFavoritePosts ? 0 : (section == 1 ? 30 : 300)
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {

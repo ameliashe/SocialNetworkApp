@@ -153,34 +153,13 @@ class CustomPostCell: UITableViewCell {
 	func update(_ model: Post) {
 		if let user = userList.first(where: { $0.login == model.authorID }) {
 			authorLabel.text = user.fullName
-			
-			if let url = URL(string: user.avatar) {
-				URLSession.shared.dataTask(with: url) { data, response, error in
-					guard let data = data, let image = UIImage(data: data) else { return }
-					DispatchQueue.main.async {
-						self.authorAvatarImageView.image = image
-					}
-				}.resume()
-				
-			} else {
-				authorAvatarImageView.image = UIImage(named: user.avatar)
-			}
+			ImageLoader.shared.load(from: user.avatar, into: authorAvatarImageView)
 		} else {
 			authorLabel.text = model.authorID
 			authorAvatarImageView.image = nil
 		}
 		
-		if let url = URL(string: model.image) {
-			imageTask = URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-				guard let self = self,
-					  let data = data,
-					  let image = UIImage(data: data) else { return }
-				DispatchQueue.main.async { self.attachedImageView.image = image }
-			}
-			imageTask?.resume()
-		} else {
-			attachedImageView.image = nil
-		}
+		ImageLoader.shared.load(from: model.image, into: attachedImageView)
 		
 		descriptionLabel.text = model.description
 		

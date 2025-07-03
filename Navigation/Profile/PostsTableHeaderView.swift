@@ -11,6 +11,13 @@ class PostsTableHeaderView: UITableViewHeaderFooterView {
 
 	let bgContainerView = BackgroundContainerView()
 	
+	let rectangleView: UIView = {
+		let view = UIView()
+		view.backgroundColor = ColorPalette.cardBackground
+		view.translatesAutoresizingMaskIntoConstraints = false
+		return view
+	}()
+	
 	var titleLabel: UILabel = {
 		let label = UILabel()
 		label.text = NSLocalizedString("Posts", comment: "Posts table header label")
@@ -34,6 +41,7 @@ class PostsTableHeaderView: UITableViewHeaderFooterView {
 	
 	func addSubviews() {
 		addSubview(bgContainerView)
+		addSubview(rectangleView)
 		addSubview(titleLabel)
 	}
 	
@@ -42,7 +50,13 @@ class PostsTableHeaderView: UITableViewHeaderFooterView {
 			bgContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			bgContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
 			bgContainerView.topAnchor.constraint(equalTo: topAnchor),
-			bgContainerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 20),
+			bgContainerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 10),
+			
+			rectangleView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			rectangleView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			rectangleView.topAnchor.constraint(equalTo: bgContainerView.centerYAnchor),
+			rectangleView.bottomAnchor.constraint(equalTo: bgContainerView.bottomAnchor),
+			
 			
 			titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
 			titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12)

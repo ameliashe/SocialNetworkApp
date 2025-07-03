@@ -8,7 +8,8 @@
 import UIKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
-
+	
+	//MARK: UI Elements
 	private let backgroundContainerView = BackgroundContainerView()
 
 	let avatarImageView: UIImageView = {
@@ -78,9 +79,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 		return stackView
 	}()
 
-
+	//MARK: Avatar closure
 	var avatarTapped: (() -> Void)?
 
+	//MARK: Initializers
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
 
@@ -93,6 +95,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 		super.init(coder: coder)
 	}
 
+	//MARK: Layout methods
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2
@@ -141,7 +144,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 		])
 	}
 
-	func configure(with user: User) {
+	//MARK: View Configuration
+	func configure(with user: User, postsCount: Int?) {
+		ImageLoader.shared.load(from: user.avatar, into: avatarImageView)
 		avatarImageView.image = UIImage(named: "\(user.avatar)")
 		fullNameLabel.text = user.fullName
 		statusLabel.text = user.status
@@ -167,19 +172,18 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 
 			cityLabel.attributedText = fullString
 
-			postsView.configure(count: 1337, title: NSLocalizedString("Posts", comment: "Posts counter title in profile"))
+			postsView.configure(count: postsCount ?? 0, title: NSLocalizedString("Posts", comment: "Posts counter title in profile"))
 			friendsView.configure(count: user.friends?.count ?? 0, title: NSLocalizedString("Friends", comment: "Friends Counter Title in profile"))
 			subscribersView.configure(count: user.followers?.count ?? 0, title: NSLocalizedString("Followers", comment: "Followers counter title in profile"))
 
 		}
 	}
 
+	//MARK: Gesture recognition
 	func configureAvatarTap() {
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(avatarTappedAction))
 		avatarImageView.addGestureRecognizer(tapGesture)
 	}
-
-	private var statusText: String = ""
 
 	@objc private func avatarTappedAction() {
 		avatarTapped?()

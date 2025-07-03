@@ -285,7 +285,6 @@ class LogInViewController: UIViewController {
 					if let id = emailParts.first {
 						self?.keychain.set(id, forKey: "userID")
 					}
-					
 					self?.navigateToProfile()
 				case .failure(let error):
 					self?.handleAuthError(error)
@@ -321,8 +320,10 @@ class LogInViewController: UIViewController {
 
 	func navigateToProfile() {
 		let profileVC = MainViewController()
-		profileVC.user = userList.first { $0.login == userID }
-		let arrayOfPosts = posts.filter { $0.authorID == userID }
+		// Retrieve userID from Keychain if available
+		let savedUserID = keychain.get("userID") ?? userID
+		profileVC.user = userList.first { $0.login == savedUserID }
+		let arrayOfPosts = posts.filter { $0.authorID == savedUserID }
 		profileVC.postsList = arrayOfPosts
 		navigationController?.pushViewController(profileVC, animated: true)
 	}

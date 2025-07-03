@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import UIKit
+import FirebaseFirestore
 
 public struct Post: Codable {
 	public let authorID: String
