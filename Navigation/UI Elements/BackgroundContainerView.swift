@@ -2,7 +2,7 @@
 //  BackgroundContainerView.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 6/26/25.
+//  Created by Amelia Shekikhacheva on 6/26/25.
 //
 
 import UIKit

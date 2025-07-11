@@ -2,7 +2,7 @@
 //  DarkMode.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 4/14/25.
+//  Created by Amelia Shekikhacheva on 4/14/25.
 //
 
 import Foundation

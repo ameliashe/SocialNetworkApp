@@ -12,14 +12,7 @@ class CustomPostCell: UITableViewCell {
 	
 	private var imageTask: URLSessionDataTask?
 	
-	let authorLabel: UILabel = {
-		let label = UILabel()
-		label.font = .systemFont(ofSize: 20, weight: .bold)
-		label.textColor = ColorPalette.customTextColor
-		label.numberOfLines = 2
-		label.translatesAutoresizingMaskIntoConstraints = false
-		return label
-	}()
+	let authorLabel = HeadlineLabel()
 	
 	let authorAvatarImageView: UIImageView = {
 		let imageView = UIImageView()
@@ -113,12 +106,13 @@ class CustomPostCell: UITableViewCell {
 			authorAvatarImageView.widthAnchor.constraint(equalToConstant: 40),
 			authorAvatarImageView.heightAnchor.constraint(equalToConstant: 40),
 			
-			authorLabel.topAnchor.constraint(equalTo: authorAvatarImageView.topAnchor, constant: -4),
-			authorLabel.leadingAnchor.constraint(equalTo: authorAvatarImageView.trailingAnchor, constant: 16),
+			authorLabel.topAnchor.constraint(equalTo: authorAvatarImageView.topAnchor, constant: -2),
+			authorLabel.leadingAnchor.constraint(equalTo: authorAvatarImageView.trailingAnchor, constant: 12),
 			authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 			
-			postDateLabel.bottomAnchor.constraint(equalTo: authorAvatarImageView.bottomAnchor, constant: -2),
-			postDateLabel.leadingAnchor.constraint(equalTo: authorAvatarImageView.trailingAnchor, constant: 16),
+			postDateLabel.bottomAnchor.constraint(equalTo: authorAvatarImageView.bottomAnchor, constant: -4),
+			postDateLabel.leadingAnchor.constraint(equalTo: authorAvatarImageView.trailingAnchor, constant: 12),
+			postDateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 			
 			attachedImageView.topAnchor.constraint(equalTo: authorAvatarImageView.bottomAnchor, constant: 6),
 			attachedImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

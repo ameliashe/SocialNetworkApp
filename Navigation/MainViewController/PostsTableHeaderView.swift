@@ -18,15 +18,7 @@ class PostsTableHeaderView: UITableViewHeaderFooterView {
 		return view
 	}()
 	
-	var titleLabel: UILabel = {
-		let label = UILabel()
-		label.text = NSLocalizedString("Posts", comment: "Posts table header label")
-		label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-		label.textColor = ColorPalette.customTextColor
-		label.textAlignment = .left
-		label.translatesAutoresizingMaskIntoConstraints = false
-		return label
-	}()
+	let titleLabel = HeadlineLabel(title: NSLocalizedString("Posts", comment: "Posts table header label"))
 	
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)

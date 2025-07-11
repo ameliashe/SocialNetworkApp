@@ -2,7 +2,7 @@
 //  CounterStackView.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 6/16/25.
+//  Created by Amelia Shekikhacheva on 6/16/25.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ final class CounterStackView: UIView {
 
 	private let topLabel: UILabel = {
 		let label = UILabel()
-		label.font = .systemFont(ofSize: 16, weight: .medium)
+		label.font = .systemFont(ofSize: 18, weight: .medium)
 		label.textColor = ColorPalette.customTextColor
 		label.textAlignment = .center
 		label.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +32,7 @@ final class CounterStackView: UIView {
 		let stackView = UIStackView(arrangedSubviews: [topLabel, bottomLabel])
 		stackView.axis = .vertical
 		stackView.alignment = .center
-		stackView.spacing = 6
+		stackView.spacing = 4
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 
 		return stackView

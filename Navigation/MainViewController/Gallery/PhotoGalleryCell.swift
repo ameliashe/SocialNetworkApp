@@ -2,7 +2,7 @@
 //  PhotoGalleryCell.swift
 //  Navigation
 //
-//  Created by Amelia Romanova on 11/16/24.
+//  Created by Amelia Shekikhacheva on 11/16/24.
 //
 
 import UIKit
