@@ -109,8 +109,8 @@ class MainViewController: UIViewController {
 		} else if isActiveProfile {
 			navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "iphone.and.arrow.forward.outward"), style: .plain, target: self, action: #selector(logoutButtonTapped))
 			let editProfileButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(editProfileTapped))
-			let newPostButton = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil.circle.fill"), style: .plain, target: self, action: #selector(newPostTapped))
-			navigationItem.rightBarButtonItems = [editProfileButton, newPostButton]
+			let newPostButton = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil.circle"), style: .plain, target: self, action: #selector(newPostTapped))
+			navigationItem.rightBarButtonItems = [newPostButton, editProfileButton]
 		}
 	}
 
