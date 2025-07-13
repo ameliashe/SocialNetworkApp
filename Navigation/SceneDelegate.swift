@@ -14,18 +14,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		guard let scene = (scene as? UIWindowScene) else { return }
-
 		let window = UIWindow(windowScene: scene)
 
-		let navigationController = UINavigationController()
-		let tabBarController = UITabBarController()
-
-		let mainCoordinator = MainCoordinator(navigationController: navigationController, tabBarController: tabBarController)
-		mainCoordinator.start()
-
-		window.rootViewController = navigationController
+		if LoginInspector().isAuthorized() {
+			let navigationController = UINavigationController()
+			let tabBarController = UITabBarController()
+			let mainCoordinator = MainCoordinator(navigationController: navigationController, tabBarController: tabBarController)
+			mainCoordinator.start()
+			
+			window.rootViewController = navigationController
+		} else {
+			let loginNavigationController = UINavigationController()
+			let loginCoordinator = LoginCoordinator(navigationController: loginNavigationController)
+			loginCoordinator.start()
+			
+			window.rootViewController = loginNavigationController
+		}
+		
 		window.makeKeyAndVisible()
-
 		self.window = window
 
 	}

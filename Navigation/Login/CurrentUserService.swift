@@ -9,7 +9,11 @@ import Foundation
 import KeychainSwift
 
 final class CurrentUserService {
-	var currentUser: String? {
+	var currentUserID: String? {
 		KeychainSwift().get("userID")
 	}
+	
+ func clearCurrentUser() {
+	 KeychainSwift().delete("userID")
+ }
 }

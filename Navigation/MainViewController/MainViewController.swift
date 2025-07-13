@@ -32,13 +32,6 @@ class MainViewController: UIViewController {
 	var user: User?
 	private var displayedPosts = [Post]()
 	private let viewModel = FavoritesViewModel()
-	private let refreshControl: UIRefreshControl = {
-		let refreshControl = UIRefreshControl()
-		refreshControl.addTarget(self, action: #selector(refresh),
-			for: .valueChanged
-		)
-		return refreshControl
-	}()
 
 		private enum HeaderFooterReuseID: String {
 		case base = "ProfileHeaderView_ID"
@@ -113,7 +106,11 @@ class MainViewController: UIViewController {
 		if isShowingFavoritePosts {
 			navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Search", comment: "Search favorites button"), style: .plain, target: self, action: #selector(filterButtonTapped))
 			navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Clear", comment: "Clear search button"), style: .plain, target: self, action: #selector(clearButtonTapped))
-		} else {
+		} else if isActiveProfile {
+			navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "iphone.and.arrow.forward.outward"), style: .plain, target: self, action: #selector(logoutButtonTapped))
+			let editProfileButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(editProfileTapped))
+			let newPostButton = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil.circle.fill"), style: .plain, target: self, action: #selector(newPostTapped))
+			navigationItem.rightBarButtonItems = [editProfileButton, newPostButton]
 		}
 	}
 
@@ -272,16 +269,10 @@ class MainViewController: UIViewController {
 		})
 	}
 
-
 	func setupGesture() {
 		let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapHandler))
 		doubleTapGesture.numberOfTapsRequired = 2
 		displayedPostsTableView.addGestureRecognizer(doubleTapGesture)
-	}
-	
-	@objc func refresh() {
-		displayedPostsTableView.reloadData()
-		refreshControl.endRefreshing()
 	}
 
 	@objc private func doubleTapHandler(_ gesture: UITapGestureRecognizer) {
@@ -349,6 +340,43 @@ class MainViewController: UIViewController {
 			cacheName: nil
 		)
 		configureTableData()
+	}
+	
+	@objc func editProfileTapped() {
+		let vc = EditProfileViewController()
+		vc.user = self.user
+		vc.modalPresentationStyle = .pageSheet
+		present(vc, animated: true)
+	}
+	
+	@objc func logoutButtonTapped() {
+		let checkerService = CheckerService()
+		checkerService.logout { result in
+			DispatchQueue.main.async {
+				switch result {
+				case .success:
+					CurrentUserService().clearCurrentUser()
+					
+					let loginVC = LogInViewController()
+					let nav = UINavigationController(rootViewController: loginVC)
+					nav.modalPresentationStyle = .fullScreen
+					self.view.window?.rootViewController = nav
+				case .failure(let error):
+					print("Couldn't logout:", error)
+				}
+			}
+		}
+	}
+	
+	@objc func newPostTapped() {
+		let vc = NewPostViewController()
+		vc.modalPresentationStyle = .pageSheet
+		present(vc, animated: true)
+	}
+	
+	public func reloadData() {
+		configureTableData()
+		displayedPostsTableView.reloadData()
 	}
 }
 
@@ -446,7 +474,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 					DispatchQueue.main.async {
 						profileVC.user = user
 						profileVC.navigationItem.largeTitleDisplayMode = .never
-						profileVC.navigationController?.isToolbarHidden = true
+						profileVC.navigationController?.isToolbarHidden = false
+						profileVC.title = user.login
 						self.navigationController?.pushViewController(profileVC, animated: true)
 					}
 				}
@@ -467,10 +496,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 				try? viewModel.persistentContainer.viewContext.save()
 			}
 		} else if !isShowingFavoritePosts && !isShowingFeed {
-			if displayedPosts[indexPath.row].authorID == CurrentUserService().currentUser {
-//				PostsStoreManager().delete(postID: displayedPosts[indexPath.row].id)
-			} else {
-				return
+			let post = displayedPosts[indexPath.row]
+			guard post.authorID == CurrentUserService().currentUserID, let postID = post.id else { return }
+			PostsStoreManager().delete(postID: postID) { [weak self] error in
+				DispatchQueue.main.async {
+					if let error = error {
+						print("Failed to delete post:", error)
+					} else {
+						self?.displayedPosts.remove(at: indexPath.row)
+						self?.displayedPostsTableView.deleteRows(at: [indexPath], with: .automatic)
+					}
+				}
 			}
 		}
 	}

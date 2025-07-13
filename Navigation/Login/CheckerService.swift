@@ -18,10 +18,12 @@ enum AuthError: Error {
 protocol CheckerServiceProtocol {
 
 	func checkCredentials(email: String, password: String, completion: @escaping (Result<Void, AuthError>) -> Void)
-
+	
 	func signUp(email: String, password: String, completion: @escaping (Result<Void, AuthError>) -> Void)
-
+	
 	func isAuthorized () -> Bool
+	
+	func logout(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class CheckerService: CheckerServiceProtocol {
@@ -62,5 +64,15 @@ class CheckerService: CheckerServiceProtocol {
 	func isAuthorized () -> Bool {
 		return Auth.auth().currentUser != nil
 	}
-
+	
+	func logout(completion: @escaping (Result<Void, Error>) -> Void) {
+		do {
+			try Auth.auth().signOut()
+			// Очистка локального ID
+			CurrentUserService().clearCurrentUser()
+			completion(.success(()))
+		} catch {
+			completion(.failure(error))
+		}
+	}
 }

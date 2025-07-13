@@ -18,6 +18,9 @@
         }
       }
     },
+    "Avatar" : {
+      "comment" : "Avatar field annotation in EditProfileVC"
+    },
     "Cancel" : {
       "comment" : "Cancel button title",
       "localizations" : {
@@ -34,6 +37,9 @@
           }
         }
       }
+    },
+    "City" : {
+      "comment" : "City field annotation in EditProfileVC"
     },
     "Clear" : {
       "comment" : "Clear search button",
@@ -69,8 +75,11 @@
         }
       }
     },
+    "Enter image URL" : {
+      "comment" : "Placeholder for photo URL"
+    },
     "Error" : {
-      "comment" : "Alert title for error",
+      "comment" : "Alert title for error\nError alert title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -154,6 +163,9 @@
         }
       }
     },
+    "Invalid URL" : {
+      "comment" : "Invalid URL alert title"
+    },
     "Log In" : {
       "comment" : "Login button title",
       "localizations" : {
@@ -170,6 +182,12 @@
           }
         }
       }
+    },
+    "Name" : {
+      "comment" : "Name field annotation in EditProfileVC"
+    },
+    "New Post" : {
+      "comment" : "Title for new post screen"
     },
     "Password" : {
       "comment" : "Password input placeholder",
@@ -205,6 +223,9 @@
         }
       }
     },
+    "Photo URL" : {
+      "comment" : "Label for photo URL"
+    },
     "Photos" : {
       "comment" : "Photos table view cell label",
       "localizations" : {
@@ -221,6 +242,12 @@
           }
         }
       }
+    },
+    "Please enter a valid URL." : {
+      "comment" : "Invalid URL alert message"
+    },
+    "Post" : {
+      "comment" : "Post button title"
     },
     "Posts" : {
       "comment" : "Posts counter title in profile\nPosts table header label",
@@ -255,6 +282,9 @@
           }
         }
       }
+    },
+    "Save" : {
+      "comment" : "Save button in EditProfileVC"
     },
     "Saved to Faves!" : {
       "comment" : "Alert: post was saved to favorites",
@@ -323,6 +353,12 @@
           }
         }
       }
+    },
+    "Status" : {
+      "comment" : "Status field annotation in EditProfileVC"
+    },
+    "Text" : {
+      "comment" : "Label for post text"
     },
     "This email is already in use" : {
       "comment" : "Error message for email already in use",

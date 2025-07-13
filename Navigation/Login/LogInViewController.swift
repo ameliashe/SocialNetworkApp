@@ -19,12 +19,12 @@ class LogInViewController: UIViewController {
 	private let biometry = LocalAuthorizationService.shared.checkBiometryType()
 
 	//MARK: UI Elements
-	lazy var credentialsStackView: UIStackView = {
+	private lazy var credentialsStackView: UIStackView = {
 		let stackView = UIStackView(arrangedSubviews: [usernameTextField, separatorView, passwordTextField])
 		stackView.axis = .vertical
 		stackView.spacing = 0
 		stackView.distribution = .fill
-		stackView.layer.cornerRadius = 10
+		stackView.layer.cornerRadius = 12
 		stackView.layer.borderWidth = 0.5
 		stackView.layer.borderColor = UIColor.lightGray.cgColor
 		stackView.layer.masksToBounds = true
@@ -32,45 +32,35 @@ class LogInViewController: UIViewController {
 		return stackView
 	}()
 
-	let usernameTextField: TextField = {
-		let textField = TextField()
+	private lazy var usernameTextField: BasicTextField = {
+		let textField = BasicTextField()
 		textField.placeholder = NSLocalizedString("Email or phone", comment: "Username input placeholder")
-		textField.backgroundColor = ColorPalette.accentColor
 #if DEBUG
 		textField.text = "test@test.com"
 #endif
-		textField.textColor = ColorPalette.customTextColor
-		textField.font = .systemFont(ofSize: 16)
-		textField.tintColor = UIColor(named: "VKColor")
-		textField.isUserInteractionEnabled = true
 		textField.autocapitalizationType = .none
 		return textField
 	}()
 
-	internal lazy var passwordTextField: TextField = {
-		let textField = TextField()
+	private lazy var passwordTextField: BasicTextField = {
+		let textField = BasicTextField()
 		textField.placeholder = NSLocalizedString("Password", comment: "Password input placeholder")
 #if DEBUG
 		textField.text = "123456"
 #endif
-		textField.backgroundColor = ColorPalette.accentColor
-		textField.textColor = ColorPalette.customTextColor
-		textField.font = .systemFont(ofSize: 16)
-		textField.tintColor = UIColor(named: "VKColor")
-		textField.isUserInteractionEnabled = true
 		textField.autocapitalizationType = .none
 		textField.isSecureTextEntry = true
 		return textField
 	}()
 
-	let separatorView: UIView = {
+	private let separatorView: UIView = {
 		let view = UIView()
 		view.backgroundColor = .lightGray
 		view.translatesAutoresizingMaskIntoConstraints = false
 		return view
 	}()
 
-	let scrollView: UIScrollView = {
+	private let scrollView: UIScrollView = {
 		let scrollView = UIScrollView()
 		scrollView.showsVerticalScrollIndicator = false
 		scrollView.showsHorizontalScrollIndicator = false
@@ -78,13 +68,13 @@ class LogInViewController: UIViewController {
 		return scrollView
 	}()
 
-	let contentView: UIView = {
+	private let contentView: UIView = {
 		let view = UIView()
 		view.translatesAutoresizingMaskIntoConstraints = false
 		return view
 	}()
 
-	let logoImageView: UIImageView = {
+	private let logoImageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.image = UIImage(named: "logo-2")
 		imageView.contentMode = .scaleAspectFit
@@ -151,7 +141,7 @@ class LogInViewController: UIViewController {
 	}
 
 	//MARK: UI Setup
-	func viewSetup() {
+	private func viewSetup() {
 		navigationController?.navigationBar.isHidden = true
 		view.backgroundColor = ColorPalette.customBackground
 
@@ -166,7 +156,7 @@ class LogInViewController: UIViewController {
 		view.addSubview(scrollView)
 	}
 
-	func layoutConstraintsSetup() {
+	private func layoutConstraintsSetup() {
 		NSLayoutConstraint.activate([
 			logoImageView.widthAnchor.constraint(equalToConstant: 100),
 			logoImageView.heightAnchor.constraint(equalToConstant: 100),
@@ -262,7 +252,7 @@ class LogInViewController: UIViewController {
 	}
 
 	//MARK: User Interaction Methods
-	func logInButtonTapped() {
+	private func logInButtonTapped() {
 		guard let email = usernameTextField.text, let password = passwordTextField.text, !email.isEmpty, !password.isEmpty else {
 			showErrorAlert(message: NSLocalizedString("Username and password cannot be empty", comment: "Error message for empty login and password"))
 			return
@@ -293,7 +283,7 @@ class LogInViewController: UIViewController {
 		}
 	}
 
-	func signUpButtonTapped() {
+	private func signUpButtonTapped() {
 		guard let email = usernameTextField.text, let password = passwordTextField.text, !email.isEmpty, !password.isEmpty else {
 			showErrorAlert(message: NSLocalizedString("Username and password cannot be empty", comment: "Error message for empty login and password"))
 			return
@@ -318,19 +308,19 @@ class LogInViewController: UIViewController {
 		}
 	}
 
-	func navigateToProfile() {
-		let profileVC = MainViewController()
-		// Retrieve userID from Keychain if available
-		UsersStoreManager().fetchUser(byLogin: CurrentUserService().currentUser ?? "") { [weak self] user in
-			guard let self = self else { return }
-			DispatchQueue.main.async {
-				profileVC.user = user
-				self.navigationController?.pushViewController(profileVC, animated: true)
-			}
-		}
+	private func navigateToProfile() {
+		let tabBar = UITabBarController()
+		let mainNС = UINavigationController()
+		let mainCoordinator = MainCoordinator(
+			navigationController: mainNС,
+			tabBarController: tabBar
+		)
+		mainCoordinator.start()
+		
+		navigationController?.setViewControllers([tabBar], animated: true)
 	}
 
-	func handleAuthError(_ error: AuthError) {
+	private func handleAuthError(_ error: AuthError) {
 		switch error {
 		case .userNotFound:
 			showErrorAlert(message: NSLocalizedString("User not found. Please sign up.", comment: "Error message for user not found"))
@@ -343,7 +333,7 @@ class LogInViewController: UIViewController {
 		}
 	}
 
-	func showErrorAlert(message: String) {
+	private func showErrorAlert(message: String) {
 		let alert = UIAlertController(title: NSLocalizedString("Error", comment: "Alert title for error"), message: message, preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 		present(alert, animated: true, completion: nil)

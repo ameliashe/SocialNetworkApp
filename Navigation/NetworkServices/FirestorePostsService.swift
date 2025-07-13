@@ -51,7 +51,11 @@ final class PostsStoreManager {
 		}
 	}
 	
-	func delete() {
-		
+	func delete(postID: String, completion: @escaping (Error?) -> Void) {
+//		db.document(postID).delete { error in
+//			DispatchQueue.main.async {
+//				completion(error)
+//			}
+//		}
 	}
 }

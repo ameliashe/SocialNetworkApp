@@ -68,7 +68,7 @@ final class UsersStoreManager {
 	}
 	
 	func updateUser(_ user: User, completion: @escaping ((_ error: Error?) -> Void)) {
-	let currentUserID = CurrentUserService().currentUser
+	let currentUserID = CurrentUserService().currentUserID
 
 		guard let id = user.id else {
 			completion(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User ID is missing."]))
