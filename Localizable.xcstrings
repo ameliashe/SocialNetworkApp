@@ -19,7 +19,21 @@
       }
     },
     "Avatar" : {
-      "comment" : "Avatar field annotation in EditProfileVC"
+      "comment" : "Avatar field annotation in EditProfileVC",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avatar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аватар"
+          }
+        }
+      }
     },
     "Cancel" : {
       "comment" : "Cancel button title",
@@ -39,7 +53,21 @@
       }
     },
     "City" : {
-      "comment" : "City field annotation in EditProfileVC"
+      "comment" : "City field annotation in EditProfileVC",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "City"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Город"
+          }
+        }
+      }
     },
     "Clear" : {
       "comment" : "Clear search button",
@@ -76,7 +104,21 @@
       }
     },
     "Enter image URL" : {
-      "comment" : "Placeholder for photo URL"
+      "comment" : "Placeholder for photo URL",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter Image URL"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставьте ссылку на изображение"
+          }
+        }
+      }
     },
     "Error" : {
       "comment" : "Alert title for error\nError alert title",
@@ -164,7 +206,21 @@
       }
     },
     "Invalid URL" : {
-      "comment" : "Invalid URL alert title"
+      "comment" : "Invalid URL alert title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid URL"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверная ссылка"
+          }
+        }
+      }
     },
     "Log In" : {
       "comment" : "Login button title",
@@ -184,10 +240,38 @@
       }
     },
     "Name" : {
-      "comment" : "Name field annotation in EditProfileVC"
+      "comment" : "Name field annotation in EditProfileVC",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full Name"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Полное имя"
+          }
+        }
+      }
     },
     "New Post" : {
-      "comment" : "Title for new post screen"
+      "comment" : "Title for new post screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Post"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новый пост"
+          }
+        }
+      }
     },
     "Password" : {
       "comment" : "Password input placeholder",
@@ -224,7 +308,21 @@
       }
     },
     "Photo URL" : {
-      "comment" : "Label for photo URL"
+      "comment" : "Label for photo URL",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo URL"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ссылка на фото"
+          }
+        }
+      }
     },
     "Photos" : {
       "comment" : "Photos table view cell label",
@@ -244,10 +342,38 @@
       }
     },
     "Please enter a valid URL." : {
-      "comment" : "Invalid URL alert message"
+      "comment" : "Invalid URL alert message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter a valid URL."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пожалуйста, введите подходящую ссылку"
+          }
+        }
+      }
     },
     "Post" : {
-      "comment" : "Post button title"
+      "comment" : "Post button title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Post"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опубликовать"
+          }
+        }
+      }
     },
     "Posts" : {
       "comment" : "Posts counter title in profile\nPosts table header label",
@@ -284,7 +410,21 @@
       }
     },
     "Save" : {
-      "comment" : "Save button in EditProfileVC"
+      "comment" : "Save button in EditProfileVC",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
+        }
+      }
     },
     "Saved to Faves!" : {
       "comment" : "Alert: post was saved to favorites",
@@ -355,10 +495,38 @@
       }
     },
     "Status" : {
-      "comment" : "Status field annotation in EditProfileVC"
+      "comment" : "Status field annotation in EditProfileVC",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус"
+          }
+        }
+      }
     },
     "Text" : {
-      "comment" : "Label for post text"
+      "comment" : "Label for post text",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текст"
+          }
+        }
+      }
     },
     "This email is already in use" : {
       "comment" : "Error message for email already in use",
