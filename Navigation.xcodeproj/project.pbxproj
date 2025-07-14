@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26AE90EC2E251FEF00696FC7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 26AE90EB2E251FEF00696FC7 /* README.md */; };
 		94DAD61164B1BE0B4E8A2015 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13EA6A1FE50DEB1F1E75436 /* Pods_Navigation.framework */; };
 		CE0805E22DAC3C4D00BBC9B0 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CE0805E12DAC3C4D00BBC9B0 /* Localizable.xcstrings */; };
 		CE91A0C02D5950FE006B86B2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE91A0BF2D5950FE006B86B2 /* GoogleService-Info.plist */; };
@@ -37,6 +38,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		26AE90EB2E251FEF00696FC7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F77197F42345965FEF9CEC0 /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
 		B13EA6A1FE50DEB1F1E75436 /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B711C45B8E7E22A29F45CF2E /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
@@ -57,6 +59,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		26AE90ED2E25200100696FC7 /* Screenshots */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Screenshots;
+			sourceTree = "<group>";
+		};
 		CE5480F82CBC56900082AC64 /* Navigation */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -119,6 +126,8 @@
 				CE91A0BF2D5950FE006B86B2 /* GoogleService-Info.plist */,
 				CD3C2A0CBAA21C253ECDCBFD /* Pods */,
 				75F904C0D7673E3FD13195B5 /* Frameworks */,
+				26AE90EB2E251FEF00696FC7 /* README.md */,
+				26AE90ED2E25200100696FC7 /* Screenshots */,
 			);
 			sourceTree = "<group>";
 		};
@@ -150,6 +159,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				26AE90ED2E25200100696FC7 /* Screenshots */,
 				CE5480F82CBC56900082AC64 /* Navigation */,
 			);
 			name = Navigation;
@@ -232,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE0805E22DAC3C4D00BBC9B0 /* Localizable.xcstrings in Resources */,
+				26AE90EC2E251FEF00696FC7 /* README.md in Resources */,
 				CE91A0C02D5950FE006B86B2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

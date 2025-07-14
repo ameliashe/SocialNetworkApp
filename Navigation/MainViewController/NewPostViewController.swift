@@ -8,16 +8,15 @@
 import UIKit
 
 class NewPostViewController: UIViewController {
-
+	
 	private let textLabel: HeadlineLabel = {
 		let label = HeadlineLabel(title: NSLocalizedString("Text", comment: "Label for post text"))
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
 	
-	private let contentTextView: SingleTextField = {
-		let tv = SingleTextField()
-		tv.font = .systemFont(ofSize: 16)
+	private let contentTextView: CustomTextView = {
+		let tv = CustomTextView()
 		tv.translatesAutoresizingMaskIntoConstraints = false
 		return tv
 	}()
@@ -107,9 +106,4 @@ class NewPostViewController: UIViewController {
 			self.present(alert, animated: true)
 		}
 	}
-}
-
-@available(iOS 18.0, *)
-#Preview {
-	return NewPostViewController()
 }

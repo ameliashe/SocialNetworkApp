@@ -277,8 +277,12 @@ class MainViewController: UIViewController {
 
 	@objc private func doubleTapHandler(_ gesture: UITapGestureRecognizer) {
 		let location = gesture.location(in: displayedPostsTableView)
-		guard let indexPath = displayedPostsTableView.indexPathForRow(at: location), indexPath.section == 1 else {
-			return
+		guard let indexPath = displayedPostsTableView.indexPathForRow(at: location) else { return }
+		
+		if isShowingFeed {
+			guard indexPath.section == 0 else { return }
+		} else {
+			guard indexPath.section == 1 else { return }
 		}
 
 		let selectedPost = displayedPosts[indexPath.row]
@@ -405,7 +409,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		} else
 		
 		//Rounded header for posts in profile
-		if section == 1 && !isShowingFavoritePosts {
+		if (section == 1 && !isShowingFavoritePosts) || (section == 0 && !isActiveProfile && !isShowingFavoritePosts && !isShowingFeed) {
 			guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderFooterReuseID.posts.rawValue) as? PostsTableHeaderView else {
 				return nil
 			}
@@ -488,7 +492,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return (isShowingFavoritePosts || isActiveProfile) || !isShowingFeed
+		return (isShowingFavoritePosts && indexPath.section == 0) ||
+			   (isActiveProfile && !isShowingFeed && indexPath.section == 1)
 	}
 
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
