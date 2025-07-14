@@ -124,7 +124,7 @@ class MainViewController: UIViewController {
 		
 		displayedPostsTableView.register(PostsTableHeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderFooterReuseID.posts.rawValue)
 
-		displayedPostsTableView.register(CustomPostCell.self, forCellReuseIdentifier: CellReuseID.base.rawValue)
+		displayedPostsTableView.register(PostCell.self, forCellReuseIdentifier: CellReuseID.base.rawValue)
 
 		displayedPostsTableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: CellReuseID.photos.rawValue)
 
@@ -426,7 +426,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		//Photos Panel in Profile
-		if indexPath.section == 0 && !isShowingFavoritePosts && !isShowingFeed {
+		if indexPath.section == 0 && !isShowingFavoritePosts && !isShowingFeed && isActiveProfile {
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseID.photos.rawValue, for: indexPath) as? PhotosTableViewCell else {
 				fatalError("Could not dequeue PhotosTableViewCell")
 			}
@@ -435,8 +435,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		}
 
 		//Cell for posts in the Profile and in the Favorites
-		if (indexPath.section == 0 && (isShowingFavoritePosts || isShowingFeed)) || (indexPath.section == 1 && !isShowingFavoritePosts) {
-			guard let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseID.base.rawValue, for: indexPath) as? CustomPostCell else {
+		if (indexPath.section == 0 && (isShowingFavoritePosts || isShowingFeed || !isActiveProfile)) || (indexPath.section == 1 && (!isShowingFavoritePosts)) {
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseID.base.rawValue, for: indexPath) as? PostCell else {
 				fatalError("Could not dequeue CustomPostCell")
 			}
 			guard !displayedPosts.isEmpty else {
@@ -444,6 +444,25 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 			}
 			cell.update(displayedPosts[indexPath.row])
 			cell.selectionStyle = .none
+			if isShowingFeed || isShowingFavoritePosts {
+				cell.onAuthorTap = { [weak self] in
+					guard let self else { return }
+
+					let selectedPost = self.displayedPosts[indexPath.row]
+					let profileVC = MainViewController()
+
+					UsersStoreManager().fetchUser(byLogin: selectedPost.authorID) { user in
+						guard let user = user else { return }
+						DispatchQueue.main.async {
+							profileVC.user = user
+							profileVC.navigationItem.largeTitleDisplayMode = .never
+							profileVC.navigationController?.isToolbarHidden = false
+							profileVC.title = user.login
+							self.navigationController?.pushViewController(profileVC, animated: true)
+						}
+					}
+				}
+			}
 			return cell
 		} else {
 			return UITableViewCell()
@@ -462,29 +481,14 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
 		//Push Photo Gallery
-		if indexPath.section == 0  && !isShowingFavoritePosts && !isShowingFeed {
+		if indexPath.section == 0  && !isShowingFavoritePosts && !isShowingFeed && isActiveProfile {
 			let galleryVC = PhotoGalleryViewController()
 			navigationController?.pushViewController(galleryVC, animated: true)
-		} else {
-			if isShowingFeed {
-				let profileVC = MainViewController()
-				let postAuthorID = displayedPosts[indexPath.row].authorID
-				UsersStoreManager().fetchUser(byLogin: postAuthorID) { user in
-					guard let user = user else { return }
-					DispatchQueue.main.async {
-						profileVC.user = user
-						profileVC.navigationItem.largeTitleDisplayMode = .never
-						profileVC.navigationController?.isToolbarHidden = false
-						profileVC.title = user.login
-						self.navigationController?.pushViewController(profileVC, animated: true)
-					}
-				}
-			}
 		}
 	}
 	
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return isShowingFavoritePosts || !isShowingFeed
+		return (isShowingFavoritePosts || isActiveProfile) || !isShowingFeed
 	}
 
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

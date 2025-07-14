@@ -1,5 +1,5 @@
 //
-//  CustomPostCell.swift
+//  PostCell.swift
 //  Navigation
 //
 //  Created by Amelia Shekikhacheva on 11/14/24.
@@ -8,10 +8,12 @@
 import UIKit
 import Foundation
 
-class CustomPostCell: UITableViewCell {
+class PostCell: UITableViewCell {
 	
-	private var imageTask: URLSessionDataTask?
+	//Callback for Profile pushing
+	var onAuthorTap: (() -> Void)?
 	
+	//MARK: UI elements
 	let authorLabel = HeadlineLabel()
 	
 	let authorAvatarImageView: UIImageView = {
@@ -53,7 +55,6 @@ class CustomPostCell: UITableViewCell {
 		let label = UILabel()
 		label.font = .systemFont(ofSize: 14, weight: .regular)
 		label.textColor = ColorPalette.customTextColor
-		label.layer.opacity = 0.2
 		label.textAlignment = .right
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
@@ -74,6 +75,7 @@ class CustomPostCell: UITableViewCell {
 		addSubviews()
 		setupConstraints()
 		tuneView()
+		setupAuthorTap()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -82,8 +84,6 @@ class CustomPostCell: UITableViewCell {
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		imageTask?.cancel()
-		imageTask = nil
 		authorAvatarImageView.image = UIImage(named: "avatar_placeholder")
 		attachedImageView.image = nil
 	}
@@ -174,7 +174,7 @@ class CustomPostCell: UITableViewCell {
 		
 		
 		let heartAttachment = NSTextAttachment()
-		heartAttachment.image = UIImage(systemName: "heart")
+		heartAttachment.image = UIImage(systemName: "heart")?.withTintColor(ColorPalette.customTextColor, renderingMode: .alwaysTemplate)
 		heartAttachment.bounds = CGRect(x: 0, y: -2, width: 16, height: 14)
 		let heartString = NSAttributedString(attachment: heartAttachment)
 		let likesCount = NSAttributedString(string: " \(post.likes)")
@@ -184,7 +184,7 @@ class CustomPostCell: UITableViewCell {
 		likesLabel.attributedText = likesAttributed
 		
 		let eyeAttachment = NSTextAttachment()
-		eyeAttachment.image = UIImage(systemName: "eye")
+		eyeAttachment.image = UIImage(systemName: "eye")?.withTintColor(ColorPalette.customTextColor, renderingMode: .alwaysTemplate)
 		eyeAttachment.bounds = CGRect(x: 0, y: -2, width: 20, height: 14)
 		let eyeString = NSAttributedString(attachment: eyeAttachment)
 		let viewsCount = NSAttributedString(string: " \(post.views)")
@@ -192,6 +192,20 @@ class CustomPostCell: UITableViewCell {
 		viewsAttributed.append(eyeString)
 		viewsAttributed.append(viewsCount)
 		viewsLabel.attributedText = viewsAttributed
+	}
+	
+	func setupAuthorTap() {
+		authorLabel.isUserInteractionEnabled = true
+		let nameTap = UITapGestureRecognizer(target: self, action: #selector(handleAuthorTap))
+		authorLabel.addGestureRecognizer(nameTap)
+
+		authorAvatarImageView.isUserInteractionEnabled = true
+		let avatarTap = UITapGestureRecognizer(target: self, action: #selector(handleAuthorTap))
+		authorAvatarImageView.addGestureRecognizer(avatarTap)
+	}
+	
+	@objc private func handleAuthorTap() {
+		onAuthorTap?()
 	}
 	
 }

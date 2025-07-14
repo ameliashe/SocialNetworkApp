@@ -25,7 +25,7 @@ final class CustomButton: UIButton {
 	private func setupButton(title: String) {
 		self.setTitle(title, for: .normal)
 		self.setTitleColor(.white, for: .normal)
-		self.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
+		self.backgroundColor = ColorPalette.buttonColor
 		self.layer.masksToBounds = true
 		self.layer.cornerRadius = 12
 		self.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ final class CustomImageButton: UIButton {
 	private func setupButton(image: UIImage) {
 		self.setImage(image, for: .normal)
 		self.tintColor = .white
-		self.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
+		self.backgroundColor = ColorPalette.buttonColor
 		self.layer.masksToBounds = true
 		self.layer.cornerRadius = 12
 		self.translatesAutoresizingMaskIntoConstraints = false

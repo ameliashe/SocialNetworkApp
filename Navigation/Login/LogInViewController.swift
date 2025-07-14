@@ -94,7 +94,7 @@ class LogInViewController: UIViewController {
 		let activityIndicatorView = UIActivityIndicatorView(style: .medium)
 		activityIndicatorView.hidesWhenStopped = true
 		activityIndicatorView.style = .medium
-		activityIndicatorView.color = .systemBlue
+		activityIndicatorView.color = UIColor(named: "AccentColor")
 		activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
 		return activityIndicatorView
 	}()
@@ -158,12 +158,12 @@ class LogInViewController: UIViewController {
 
 	private func layoutConstraintsSetup() {
 		NSLayoutConstraint.activate([
-			logoImageView.widthAnchor.constraint(equalToConstant: 100),
-			logoImageView.heightAnchor.constraint(equalToConstant: 100),
-			logoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
+			logoImageView.widthAnchor.constraint(equalToConstant: 250),
+			logoImageView.heightAnchor.constraint(equalToConstant: 250),
+			logoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
 			logoImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
 
-			credentialsStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 120),
+			credentialsStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 50),
 			credentialsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
 			credentialsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 			credentialsStackView.heightAnchor.constraint(equalToConstant: 100),

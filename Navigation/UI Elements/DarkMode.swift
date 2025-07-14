@@ -25,5 +25,6 @@ struct ColorPalette {
 	static let cardBackground = UIColor.createColor(lightMode: .white, darkMode: .systemGray6)
 	static let customTextColor = UIColor.createColor(lightMode: .black, darkMode: .white)
 	static let accentColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray4)
+	static let buttonColor = UIColor.createColor(lightMode: UIColor(red: 38/255, green: 50/255, blue: 56/255, alpha: 1), darkMode: UIColor(red: 255/255, green: 158/255, blue: 69/255, alpha: 1))
 }
 
