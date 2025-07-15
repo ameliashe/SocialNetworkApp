@@ -18,15 +18,27 @@ class ProfileCoordinator: Coordinator {
 	}
 
 	func start() {
-		let profileVC = MainViewController()
+		let profileVC = ProfileViewController()
 		profileVC.isActiveProfile = true
 		navigationController.viewControllers = [profileVC]
 
 		UsersStoreManager().fetchUser(byLogin: CurrentUserService().currentUserID ?? "") { [weak profileVC] user in
 			DispatchQueue.main.async {
 				profileVC?.user = user
-				profileVC?.reloadData()
+				profileVC?.displayedPostsTableView.reloadData()
 			}
 		}
+	}
+	
+	
+	//MARK: External profile presentation
+	func showProfile(for user: User, isActive: Bool = false) {
+		let profileVC = ProfileViewController()
+		profileVC.user = user
+		profileVC.isActiveProfile = isActive
+		profileVC.navigationItem.largeTitleDisplayMode = .never
+		profileVC.navigationController?.isToolbarHidden = false
+		profileVC.title = user.login
+		navigationController.pushViewController(profileVC, animated: true)
 	}
 }

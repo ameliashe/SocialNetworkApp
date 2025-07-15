@@ -12,20 +12,15 @@ class FeedCoordinator: Coordinator {
 
 	var navigationController: UINavigationController
 
-
 	init(navigationController: UINavigationController) {
 		self.navigationController = navigationController
 	}
 
 	func start() {
-
-		let feedVC = MainViewController()
-		feedVC.isShowingFeed = true
+		let feedVC = FeedViewController()
 		feedVC.title = NSLocalizedString("Feed", comment: "Feed Navigation Bar Title")
 		feedVC.navigationItem.largeTitleDisplayMode = .automatic
 		navigationController.navigationBar.prefersLargeTitles = true
-		
 		navigationController.pushViewController(feedVC, animated: false)
 	}
-
 }
