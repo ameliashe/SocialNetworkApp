@@ -11,8 +11,12 @@ import UIKit
 
 final class FavoritesViewModel {
 
+
+	//MARK: Properties
 	private(set) var posts: [Post] = []
 
+
+	//MARK: Core Data
 	lazy var persistentContainer: NSPersistentContainer = {
 		let container = NSPersistentContainer(name: "FavoritePost")
 		container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -24,6 +28,8 @@ final class FavoritesViewModel {
 		return container
 	}()
 
+
+	//MARK: Data Fetching
 	func fetchPosts() {
 		let fetchRequest = FavoritePost.fetchRequest()
 		let entities = (try? persistentContainer.viewContext.fetch(fetchRequest)) ?? []
@@ -34,6 +40,8 @@ final class FavoritesViewModel {
 		}
 	}
 
+
+	//MARK: Data Saving
 	func savePost(_ post: Post) {
 		if isPostSaved(post) {
 			print("Post is already saved!")
@@ -60,6 +68,8 @@ final class FavoritesViewModel {
 		}
 	}
 
+
+	//MARK: Data Deletion
 	func deletePost(_ post: FavoritePost) {
 
 		persistentContainer.performBackgroundTask { [weak self] backgroundContext in
@@ -78,6 +88,8 @@ final class FavoritesViewModel {
 		}
 	}
 
+
+	//MARK: Checking
 	func isPostSaved(_ post: Post) -> Bool {
 		return findPostEntity(post) != nil
 	}

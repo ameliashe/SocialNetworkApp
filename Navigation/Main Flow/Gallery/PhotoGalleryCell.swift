@@ -9,6 +9,7 @@ import UIKit
 
 class PhotoGalleryCell: UICollectionViewCell {
 
+	//MARK: UI Elements
 	let imageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.contentMode = .scaleAspectFill
@@ -17,6 +18,8 @@ class PhotoGalleryCell: UICollectionViewCell {
 		return imageView
 	}()
 
+
+	//MARK: Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		addSubviews()
@@ -27,6 +30,8 @@ class PhotoGalleryCell: UICollectionViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+
+	//MARK: Private Setup
 	func addSubviews() {
 		contentView.addSubview(imageView)
 	}
@@ -39,12 +44,16 @@ class PhotoGalleryCell: UICollectionViewCell {
 			imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
 		])
 	}
+	
 
+	//MARK: Cell Lifecycle
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		imageView.image = nil
 	}
 
+
+	//MARK: Configuration
 	func update(_ imageName: UIImage) {
 		imageView.image = imageName
 	}

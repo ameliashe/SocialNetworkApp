@@ -10,7 +10,6 @@ import CoreData
 
 class FavoritesViewController: BasePostsViewController {
 	
-	
 	//MARK: Properties
 	private var displayedPosts: [Post] = []
 	private let viewModel = FavoritesViewModel()
@@ -199,13 +198,12 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
 		}
 	}
 
-	// Убираем стандартный «offset» первой секции в .grouped таблице
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return .leastNormalMagnitude   // ≈ 0.00001
+		return .leastNormalMagnitude
 	}
 
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		return UIView(frame: .zero)    // пустой header
+		return UIView(frame: .zero)
 	}
 }
 

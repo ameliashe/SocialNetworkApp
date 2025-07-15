@@ -7,6 +7,8 @@
 
 import UIKit
 
+  
+//MARK: UI Elements
 class PhotoGalleryViewController: UIViewController {
 
 	let identifier: String = "PhotoGalleryCell"
@@ -25,6 +27,8 @@ class PhotoGalleryViewController: UIViewController {
 		return collectionView
 	}()
 
+  
+//MARK: Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationItem.title = NSLocalizedString("Photo Gallery", comment: "Photo gallery VC title")
@@ -42,14 +46,17 @@ class PhotoGalleryViewController: UIViewController {
 		navigationController?.navigationBar.isHidden = true
 	}
 
+  
+//MARK: Setup
 	func addSubviews() {
 		view.addSubview(collectionView)
-
 		collectionView.delegate = self
 		collectionView.dataSource = self
 
 	}
 
+  
+//MARK: Layout
 	func addConstraints() {
 		NSLayoutConstraint.activate([
 			collectionView.topAnchor.constraint(equalTo: view.topAnchor),

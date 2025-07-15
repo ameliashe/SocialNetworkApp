@@ -9,6 +9,8 @@ import UIKit
 
 class PhotoPreviewCollectionViewCell: UICollectionViewCell {
 
+
+	//MARK: UI Elements
 	let imageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.contentMode = .scaleAspectFill
@@ -17,16 +19,22 @@ class PhotoPreviewCollectionViewCell: UICollectionViewCell {
 		return imageView
 	}()
 
+
+	//MARK: Configuration
 	func update(_ imageName: UIImage) {
 		imageView.image = imageName
 		addSubviews()
 		configure()
 	}
 
+
+	//MARK: Setup
 	func addSubviews() {
 		contentView.addSubview(imageView)
 	}
 
+
+	//MARK: Layout
 	func configure() {
 		NSLayoutConstraint.activate([
 			imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -36,10 +44,10 @@ class PhotoPreviewCollectionViewCell: UICollectionViewCell {
 		])
 	}
 
+
+	//MARK: Lifecycle
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		imageView.image = nil
 	}
-	
-
 }
