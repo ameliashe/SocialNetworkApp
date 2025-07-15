@@ -1,7 +1,7 @@
 # SocialNetworkApp
 
 ### Screenshots
-![screenshots](Screenshots/mainscreenshot.jpg?raw=true&timestamp=123456)
+![screenshots](Screenshots/mainImage.jpg?raw=true&timestamp=123456)
 
 SocialNetworkApp is a modern iOS social media client that lets you **share moments, discover new content, and connect with friends**. The app delivers a clean, familiar UI, lightning‑fast feed rendering, and thoughtful details like offline caching.
 
