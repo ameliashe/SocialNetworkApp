@@ -101,8 +101,8 @@ class PostCell: UITableViewCell {
 	func setupConstraints() {
 		
 		NSLayoutConstraint.activate([
-			authorAvatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-			authorAvatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+			authorAvatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+			authorAvatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
 			authorAvatarImageView.widthAnchor.constraint(equalToConstant: 40),
 			authorAvatarImageView.heightAnchor.constraint(equalToConstant: 40),
 			
@@ -114,7 +114,7 @@ class PostCell: UITableViewCell {
 			postDateLabel.leadingAnchor.constraint(equalTo: authorAvatarImageView.trailingAnchor, constant: 12),
 			postDateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 			
-			attachedImageView.topAnchor.constraint(equalTo: authorAvatarImageView.bottomAnchor, constant: 6),
+			attachedImageView.topAnchor.constraint(equalTo: authorAvatarImageView.bottomAnchor, constant: 10),
 			attachedImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 			attachedImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 			attachedImageView.heightAnchor.constraint(equalTo: attachedImageView.widthAnchor, multiplier: 0.75),

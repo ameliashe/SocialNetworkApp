@@ -114,7 +114,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 	private func setupConstraints() {
 		NSLayoutConstraint.activate([
 			backgroundContainerView.topAnchor.constraint(equalTo: topAnchor, constant: -300),
-			backgroundContainerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+			backgroundContainerView.bottomAnchor.constraint(equalTo: countersStackView.bottomAnchor, constant: 18),
 			backgroundContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			backgroundContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
 

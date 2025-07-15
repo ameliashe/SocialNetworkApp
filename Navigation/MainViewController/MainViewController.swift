@@ -107,7 +107,10 @@ class MainViewController: UIViewController {
 			navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Search", comment: "Search favorites button"), style: .plain, target: self, action: #selector(filterButtonTapped))
 			navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Clear", comment: "Clear search button"), style: .plain, target: self, action: #selector(clearButtonTapped))
 		} else if isActiveProfile {
-			navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "iphone.and.arrow.forward.outward"), style: .plain, target: self, action: #selector(logoutButtonTapped))
+			if let baseIcon = UIImage(systemName: "iphone.and.arrow.forward.outward"), let cg = baseIcon.cgImage {
+				let logoutIcon = UIImage(cgImage: cg, scale: baseIcon.scale/1.2, orientation: .upMirrored)
+				navigationItem.leftBarButtonItem = UIBarButtonItem(image: logoutIcon, style: .plain, target: self, action: #selector(logoutButtonTapped))
+			}
 			let editProfileButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(editProfileTapped))
 			let newPostButton = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil.circle"), style: .plain, target: self, action: #selector(newPostTapped))
 			navigationItem.rightBarButtonItems = [newPostButton, editProfileButton]
@@ -423,9 +426,19 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if section == 0 {
-			return isShowingFavoritePosts || isShowingFeed ? displayedPosts.count : 1
+			// Feed
+			if isShowingFeed { return displayedPosts.count }
+			
+			// Favorites
+			if isShowingFavoritePosts { return displayedPosts.count }
+			
+			// Profile
+			return isActiveProfile ? 1 : 0
 		}
-		return isShowingFavoritePosts || isShowingFeed ? 0 : displayedPosts.count
+		
+		if isShowingFeed || isShowingFavoritePosts { return 0 }
+		
+		return displayedPosts.count
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -475,7 +488,12 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		if isShowingFeed { return 0 }
-		return isShowingFavoritePosts ? 0 : (section == 1 ? 30 : 300)
+		if isShowingFavoritePosts { return 0 }
+		if isActiveProfile {
+			return section == 1 ? 30 : 300
+		} else {
+			return section == 1 ? 30 : 275
+		}
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
